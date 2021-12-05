@@ -1,5 +1,6 @@
 import './App.css';
 import Navigation from './components/Navigation';
+import Signin from './components/auth/Signin';
 import Watchlists from './components/watchlist/Watchlists';
 import CreateWatchlist from './components/watchlist/CreateWatchlist';
 import AssetDetails from './components/watchlist/AssetDetails';
@@ -18,6 +19,7 @@ function App() {
       <Router>
         <Navigation />
         <Switch>
+          <Route exact path="/signin" component={Signin} />
           <Route exact path="/watchlist" component={Watchlists} />
           <Route exact path="/create/watchlist" component={CreateWatchlist} />
           <Route exact path="/asset/details/:id" component={AssetDetails} />

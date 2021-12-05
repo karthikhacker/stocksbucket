@@ -594,3 +594,69 @@ p{
    background-color: #bc4749;
    color:#FFF;
 }
+/**************Signin**************/
+.signin{
+   width:50%;
+   margin:auto;
+}
+
+.signin h1{
+   text-align: center;
+   font-weight: 700;
+   text-transform: capitalize;
+   color:#03045e;
+   margin-top: 2em;
+   margin-bottom: 1em;
+}
+.signin h4{
+   text-align: center;
+   font-weight: 400;
+   color:#6c757d;
+   font-size: 1.3em;
+   margin-bottom: 1em;
+}
+.signin form{
+   width:50%;
+   margin:auto;
+}
+.signin .form-group{
+   display: flex;
+   flex-direction:column;
+   padding: 0.5em 0;
+}
+.signin .email-label,.password-label{
+   font-size: 0.9em;
+   font-weight: 400;
+   color: #6c757d;
+}
+.signin .form-control{
+   border:0;
+   outline:none;
+   border:1px solid #e9ecef;
+   font-size: 1em;
+   padding: 0.4em 0.2em;
+   color:#6c757d;
+}
+.signin .btn-user-login{
+   padding: 0.6em 1.2em;
+   margin-top: 0.5em;
+   border:0;
+   outline: none;
+   background-color: #0d1321;
+   color:#FFF;
+   font-weight: 400;
+   text-transform:capitalize;
+   letter-spacing: 0.1em;
+   border-radius: 0.2em;
+   word-spacing: 0.1em;
+   cursor: pointer;
+   transition: transform 1s;
+}
+.signin .btn-user-login:active{
+   transform:scale(0.29);
+}
+.signin .login-error-msg{
+   font-size: 0.8em;
+   font-weight: 400;
+   color:#c32f27;
+}
