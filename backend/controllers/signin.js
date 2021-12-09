@@ -3,6 +3,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const config = require('../config/config');
 
+//user login 
 exports.signin = (req, res) => {
     User.findOne({ email: req.body.email }, (err, user) => {
         if (err || !user) {
@@ -16,9 +17,15 @@ exports.signin = (req, res) => {
                 const token = jwt.sign({
                     id: user.id,
                     email: user.email,
-                }, config.JWT_SECRET);
-                return res.status(200).json({ token: 'Bearer ' + token, user })
+                }, config.JWT_SECRET, { expiresIn: '1h' });
+                res.cookie('token', token, { expiresIn: '1h' })
+                return res.status(200).json({ token: token, user })
             }
         }
     })
+}
+
+//user info 
+exports.userInfo = (req, res) => {
+    res.json(req.user)
 }

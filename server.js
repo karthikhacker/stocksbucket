@@ -17,8 +17,9 @@ mongoose.connect(config.MONGODB_URI).then(() => {
 })
 
 //Middlewares
-app.use(express.json())
 app.use(cors());
+app.options('*', cors());
+app.use(express.json())
 app.use(morgan('dev'));
 
 //userRoutes
