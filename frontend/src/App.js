@@ -8,6 +8,7 @@ import Watchlists from './components/watchlist/Watchlists';
 import CreateWatchlist from './components/watchlist/CreateWatchlist';
 import AssetDetails from './components/watchlist/AssetDetails';
 import Dashboard from './components/Dashboard';
+import CreateAccount from './components/account/CreateAccount';
 import { Route, Switch } from 'react-router-dom';
 import PrivateRoute from './components/route/PrivateRoute';
 
@@ -33,6 +34,7 @@ function App() {
         <PrivateRoute exact path="/create/watchlist" component={CreateWatchlist} />
         <PrivateRoute exact path="/asset/details/:id" component={AssetDetails} />
         <PrivateRoute exact path="/" component={Dashboard} />
+        <PrivateRoute exact path="/create/account" component={CreateAccount} />
       </Switch>
     </div>
   );

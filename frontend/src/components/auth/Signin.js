@@ -47,7 +47,7 @@ const Signin = ({ history }) => {
         <div className="signin">
             <h1>Coinvest</h1>
             <h4>Login</h4>
-            {authError && <div className="auth-error"><p>{authError.error}</p></div>}
+            {authError ? <div className="auth-error"><p>{authError.error}</p></div> : null}
             <form onSubmit={handleSubmit}>
                 <div className="form-group">
                     <label className="email-label">Email</label>
