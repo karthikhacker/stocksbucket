@@ -5,7 +5,19 @@ const Identity = ({ nextStep, prevStep, values }) => {
     // handle continue 
     const handleContinue = (e) => {
         e.preventDefault()
-        nextStep()
+        if (values.given_name === '') {
+            values.setGivenNameError('Name is required');
+        } else if (values.family_name === '') {
+            values.setFamilyNameError('Famil name is required');
+        } else if (values.date_of_birth === '') {
+            values.setDateOfBirthError('Date of birth is required');
+        } else if (values.country_of_tax_residency === '') {
+            values.setCountryOfTaxResidencyError('Country of tax residency is required.')
+        } else if (values.funding_source === '') {
+            values.setFundingSourceError('Funding source is required');
+        } else {
+            nextStep()
+        }
     }
     // handleBack
     const handleBack = (e) => {
@@ -81,6 +93,7 @@ const Identity = ({ nextStep, prevStep, values }) => {
                     onChange={(e) => values.setGivenName(e.target.value)}
                 />
             </div>
+            {values.given_name_error && <span className='account-error-msg'>{values.given_name_error}</span>}
             <div className='form-group'>
                 <label className='label'>Famil name</label>
                 <input
@@ -146,8 +159,8 @@ const Identity = ({ nextStep, prevStep, values }) => {
                     type="text"
                     className='form-control'
                     placeholder='Country of tax resident'
-                    defaultValue={values.country_of_tax_residence}
-                    onChange={e => values.setCountryOfTaxResidence(e.target.value)}
+                    defaultValue={values.country_of_tax_residency}
+                    onChange={e => values.setCountryOfTaxResidency(e.target.value)}
                 />
             </div>
             <div className='form-group'>
@@ -189,7 +202,7 @@ const Identity = ({ nextStep, prevStep, values }) => {
             </div>
             <div className='form-group'>
                 <label className='label'>Funding source</label>
-                <select className='form-control' onChange={e => values.setFundingSource(e.target.value)}>
+                <select className='form-control' defaultValue={values.funding_source} onChange={e => values.setFundingSource(e.target.value)}>
                     <option>Select funding source</option>
                     <option value="employment_income">Employment income</option>
                     <option value="investments">Investments</option>

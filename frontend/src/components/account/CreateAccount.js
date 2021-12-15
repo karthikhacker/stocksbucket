@@ -28,7 +28,7 @@ const CreateAccount = () => {
     const [tax_id_type, setTaxIdType] = useState('');
     const [country_of_citizenship, setCountryOfCitizenship] = useState('');
     const [country_of_birth, setCountryOfBirth] = useState('');
-    const [country_of_tax_residence, setCountryOfTaxResidence] = useState('');
+    const [country_of_tax_residency, setCountryOfTaxResidency] = useState('');
     const [visa_type, setVisaType] = useState('');
     const [visa_expiration_date, setVisaExpirationDate] = useState('');
     const [date_of_departure_from_usa, setDateOfDepartureFromUsa] = useState('');
@@ -40,6 +40,11 @@ const CreateAccount = () => {
     const [liquid_net_worth_max, setLiquidNetWorthMax] = useState('');
     const [total_net_worth_min, setTotalNetWorthMin] = useState('');
     const [total_net_worth_max, setTotalNetWorthMax] = useState('');
+    const [given_name_error, setGivenNameError] = useState(null);
+    const [family_name_error, setFamilyNameError] = useState(null);
+    const [date_of_birth_error, setDateOfBirthError] = useState(null);
+    const [country_of_tax_residency_error, setCountryOfTaxResidencyError] = useState(null);
+    const [funding_source_error, setFundingSourceError] = useState(null);
     //Disclousures
     const [is_control_person, setIsControlPerson] = useState(false);
     const [is_affiliated_exchange_or_finra, setIsAffiliatedExchangeOrFinra] = useState(false);
@@ -96,8 +101,8 @@ const CreateAccount = () => {
         setCountryOfBirth,
         country_of_citizenship,
         setCountryOfCitizenship,
-        country_of_tax_residence,
-        setCountryOfTaxResidence,
+        country_of_tax_residency,
+        setCountryOfTaxResidency,
         visa_type,
         setVisaType,
         visa_expiration_date,
@@ -158,11 +163,21 @@ const CreateAccount = () => {
         phone_number_error,
         setPhoneNumberError,
         street_address_error,
-        setStreetAddress,
+        setStreetAddressError,
         cityError,
         setCityError,
         stateError,
-        setStateError
+        setStateError,
+        given_name_error,
+        setGivenNameError,
+        family_name_error,
+        setFamilyNameError,
+        date_of_birth_error,
+        setDateOfBirthError,
+        country_of_tax_residency_error,
+        setCountryOfTaxResidencyError,
+        funding_source_error,
+        setFundingSourceError
     };
     // show Step
     const showStep = (step) => {
