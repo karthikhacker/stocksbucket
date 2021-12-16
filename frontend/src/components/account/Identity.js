@@ -104,6 +104,7 @@ const Identity = ({ nextStep, prevStep, values }) => {
                     onChange={e => values.setFamilyName(e.target.value)}
                 />
             </div>
+            {values.family_name_error && <span className='account-error-msg'>{values.family_name_error}</span>}
             <div className='form-group'>
                 <label className='label'>Date of birth</label>
                 <input
@@ -114,6 +115,7 @@ const Identity = ({ nextStep, prevStep, values }) => {
                     onChange={e => values.setDateOfBirth(e.target.value)}
                 />
             </div>
+            {values.date_of_birth_error && <span className='account-error-msg' >{values.date_of_birth_error}</span>}
             <div className='form-group'>
                 <select className='form-control' onChange={e => values.setTaxIdType(e.target.value)}>
                     <option>Select tax type</option>
@@ -163,6 +165,7 @@ const Identity = ({ nextStep, prevStep, values }) => {
                     onChange={e => values.setCountryOfTaxResidency(e.target.value)}
                 />
             </div>
+            {values.country_of_tax_residency_error && <span className='account-error-msg'>{values.country_of_tax_residency_error}</span>}
             <div className='form-group'>
                 <label className='label'>Visa type</label>
                 <select className='form-control' onChange={e => values.setVisaType(e.target.type)}>
@@ -212,6 +215,7 @@ const Identity = ({ nextStep, prevStep, values }) => {
                     <option value="family">Family</option>
                 </select>
             </div>
+            {values.funding_source_error && <span className='account-error-msg'>{values.funding_source_error}</span>}
             <div className='form-group'>
                 <label className='label'>Annual income min</label>
                 <input
