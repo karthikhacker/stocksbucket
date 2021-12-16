@@ -59,10 +59,18 @@ const CreateAccount = () => {
     const [signed_at, setSignedAt] = useState('');
     const [ip_address, setIpAddress] = useState('');
     const [revision, setRevision] = useState('');
+    const [agreementsError, setAgreementsError] = useState(null);
+    const [signed_at_error, setSignedAtError] = useState(null);
+    const [ip_address_error, setIpAddressError] = useState(null);
+    const [revisionError, setRevisionError] = useState(null);
     //Document
     const [documents, setDocuments] = useState([]);
+    const [content, setContent] = useState('');
+    const [mime_type, setMimeType] = useState('');
     const [document_type, setDocumentType] = useState('');
     const [document_sub_type, setDocumentSubType] = useState('');
+    const [document_type_error, setDocumentTypeError] = useState('');
+
     //trusted contacts
     const [trusted_name, setTrustedName] = useState('');
     const [trusted_family_name, setTrustedFamilyName] = useState('');
@@ -154,6 +162,8 @@ const CreateAccount = () => {
         setDocumentType,
         document_sub_type,
         setDocumentSubType,
+        document_type_error,
+        setDocumentTypeError,
         trusted_name,
         setTrustedName,
         trusted_family_name,
@@ -177,7 +187,15 @@ const CreateAccount = () => {
         country_of_tax_residency_error,
         setCountryOfTaxResidencyError,
         funding_source_error,
-        setFundingSourceError
+        setFundingSourceError,
+        agreementsError,
+        setAgreementsError,
+        signed_at_error,
+        setSignedAtError,
+        ip_address_error,
+        setIpAddressError,
+        revisionError,
+        setRevisionError
     };
     // show Step
     const showStep = (step) => {

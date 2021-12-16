@@ -3,8 +3,18 @@ import React from 'react'
 const Agreements = ({ nextStep, prevStep, values }) => {
     // handle continue 
     const handleContinue = (e) => {
-        e.preventDefault()
-        nextStep()
+        e.preventDefault();
+        if (values.agreements === '') {
+            values.setAgreementsError('Agreement is required.')
+        } else if (values.signed_at === '') {
+            values.setSignedAtError('Signing time is required.')
+        } else if (values.ip_address === '') {
+            values.setIpAddressError('Ip address is required.');
+        } else if (values.revision === '') {
+            values.setRevisionError('Revsion is required.')
+        } else {
+            nextStep()
+        }
     }
     // handleBack
     const handleBack = (e) => {
@@ -23,6 +33,7 @@ const Agreements = ({ nextStep, prevStep, values }) => {
                     <option value="customer_agreement">Customer agreement</option>
                 </select>
             </div>
+            {values.agreementsError && <span className='account-error-msg'>{values.agreementsError}</span>}
             <div className='form-group'>
                 <label className='label'>Singed at</label>
                 <input
@@ -33,6 +44,7 @@ const Agreements = ({ nextStep, prevStep, values }) => {
                     placeholder='Signed at'
                 />
             </div>
+            {values.signed_at_error && <span className='account-error-msg'>{values.signed_at_error}</span>}
             <div className='form-group'>
                 <label className='label'>Ip address</label>
                 <input
@@ -43,6 +55,7 @@ const Agreements = ({ nextStep, prevStep, values }) => {
                     placeholder='Ip address'
                 />
             </div>
+            {values.ip_address_error && <span className='account-error-msg'>{values.ip_address_error}</span>}
             <div className='form-group'>
                 <label className='label'>Revision</label>
                 <input
@@ -53,6 +66,8 @@ const Agreements = ({ nextStep, prevStep, values }) => {
                     placeholder='Revision'
                 />
             </div>
+            {values.revisionError && <span className='account-error-msg'>{values.revisionError}</span>}
+            <br />
             <button className='btn' onClick={handleBack}>Back</button>
             <button className='btn' onClick={handleContinue}>Next</button>
         </div>

@@ -4,10 +4,33 @@ import { v4 as uuidv4 } from 'uuid';
 const Documents = ({ nextStep, prevStep, values }) => {
     const [error, setError] = useState(null);
     const [preview, setPreview] = useState(null);
+    const [mime_type, setMimeType] = useState('');
+    const [content, setContent] = useState('');
+
+
     // handle continue 
     const handleContinue = (e) => {
-        e.preventDefault()
-        nextStep()
+        e.preventDefault();
+        if (values.document_type === '') {
+            values.setDocumentTypeError('Doc type is required.')
+        } else if (mime_type === '') {
+            setError('document is required')
+        } else if (content === '') {
+            setError('Doc is required')
+        } else {
+            const { document_type, document_sub_type } = values;
+            const docData = {
+                id: uuidv4(),
+                mime_type,
+                content,
+                document_type,
+                document_sub_type,
+                createdAt: Date.now()
+            }
+            console.log(docData);
+            values.setDocuments([docData])
+            nextStep()
+        }
     }
     // handleBack
     const handleBack = (e) => {
@@ -24,18 +47,8 @@ const Documents = ({ nextStep, prevStep, values }) => {
             let reader = new FileReader();
             reader.onloadend = () => {
                 setPreview(selected);
-                const mime_type = selected.type;
-                const content = reader.result;
-                const { document_type, document_sub_type } = values;
-                const docData = {
-                    id: uuidv4(),
-                    mime_type,
-                    content,
-                    document_type,
-                    document_sub_type,
-                    createdAt: Date.now()
-                }
-                values.setDocuments([docData])
+                setMimeType(selected.type);
+                setContent(reader.result);
                 setError(null)
             }
             reader.readAsDataURL(selected);
@@ -44,7 +57,7 @@ const Documents = ({ nextStep, prevStep, values }) => {
             setPreview(null)
         }
     }
-    //console.log(values.documents);
+    //console.log(values.mime_type, values.content);
     return (
         <div className='detail-section'>
             <h3>Documents</h3>
@@ -60,6 +73,7 @@ const Documents = ({ nextStep, prevStep, values }) => {
                     <option value="w8ben">W-8 BEN tax form</option>
                 </select>
             </div>
+            {values.document_type_error && <span className='account-error-msg'>{values.document_type_error}</span>}
             <div className='form-group'>
                 <label className='label'>Document sub type</label>
                 <input
