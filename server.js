@@ -8,6 +8,7 @@ require('dotenv').config()
 
 //use routes
 const userRoutes = require('./backend/routes/user');
+const accountRoutes = require('./backend/routes/account');
 
 //Mongodb connection
 mongoose.connect(config.MONGODB_URI).then(() => {
@@ -19,12 +20,12 @@ mongoose.connect(config.MONGODB_URI).then(() => {
 //Middlewares
 app.use(cors());
 app.options('*', cors());
-app.use(express.json())
+app.use(express.json({ limit: '50mb' }))
 app.use(morgan('dev'));
 
 //userRoutes
 app.use('/api', userRoutes);
-
+app.use('/api', accountRoutes);
 // server 
 app.listen(process.env.PORT, () => {
     console.log('App running at port ', process.env.PORT);

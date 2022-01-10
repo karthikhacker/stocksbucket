@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 import Contact from './Contact';
 import Identity from './Identity';
 import Disclosures from './Disclosures';
@@ -7,43 +7,49 @@ import Documents from './Documents';
 import TrustedContacts from './TrustedContacts';
 
 const CreateAccount = () => {
+
     const [step, setStep] = useState(1);
     //contact
     const [email_address, setEmailAddress] = useState('');
     const [phone_number, setPhoneNumber] = useState('');
-    const [street_address, setStreetAddress] = useState([]);
+    const [street_address, setStreetAddress] = useState(null);
     const [city, setCity] = useState('');
     const [state, setState] = useState('');
+    const [country, setCountry] = useState('');
     const [postal_code, setPostalcode] = useState('');
     const [email_address_error, setEmailError] = useState(null);
     const [phone_number_error, setPhoneNumberError] = useState(null);
     const [street_address_error, setStreetAddressError] = useState(null);
     const [cityError, setCityError] = useState(null);
     const [stateError, setStateError] = useState(null);
+    const [countryError, setCountryError] = useState(null);
+
     // identity 
-    const [given_name, setGivenName] = useState('');
-    const [family_name, setFamilyName] = useState('');
-    const [date_of_birth, setDateOfBirth] = useState('');
-    const [tax_id, setTaxId] = useState('');
+    const [given_name, setGivenName] = useState("");
+    const [family_name, setFamilyName] = useState("");
+    const [date_of_birth, setDateOfBirth] = useState("");
+    const [tax_id, setTaxId] = useState("");
     const [tax_id_type, setTaxIdType] = useState('');
-    const [country_of_citizenship, setCountryOfCitizenship] = useState('');
-    const [country_of_birth, setCountryOfBirth] = useState('');
-    const [country_of_tax_residency, setCountryOfTaxResidency] = useState('');
-    const [visa_type, setVisaType] = useState('');
-    const [visa_expiration_date, setVisaExpirationDate] = useState('');
-    const [date_of_departure_from_usa, setDateOfDepartureFromUsa] = useState('');
-    const [permanent_resident, setPermanentResident] = useState('');
-    const [funding_source, setFundingSource] = useState('');
-    const [annual_income_min, setAnnualIncomeMin] = useState('');
-    const [annual_income_max, setAnnualIncomeMax] = useState('');
-    const [liquid_net_worth_min, setLiquidNetWorthMin] = useState('');
-    const [liquid_net_worth_max, setLiquidNetWorthMax] = useState('');
-    const [total_net_worth_min, setTotalNetWorthMin] = useState('');
-    const [total_net_worth_max, setTotalNetWorthMax] = useState('');
+    const [country_of_citizenship, setCountryOfCitizenship] = useState(null);
+    const [country_of_birth, setCountryOfBirth] = useState(null);
+    const [country_of_tax_residence, setCountryOfTaxResidence] = useState(null);
+    const [visa_type, setVisaType] = useState(null);
+    const [visa_expiration_date, setVisaExpirationDate] = useState(null);
+    const [date_of_departure_from_usa, setDateOfDepartureFromUsa] = useState(null);
+    const [permanent_resident, setPermanentResident] = useState(Boolean);
+    const [funding_source, setFundingSource] = useState(null);
+    const [annual_income_min, setAnnualIncomeMin] = useState(null);
+    const [annual_income_max, setAnnualIncomeMax] = useState(null);
+    const [liquid_net_worth_min, setLiquidNetWorthMin] = useState(null);
+    const [liquid_net_worth_max, setLiquidNetWorthMax] = useState(null);
+    const [total_net_worth_min, setTotalNetWorthMin] = useState(null);
+    const [total_net_worth_max, setTotalNetWorthMax] = useState(null);
     const [given_name_error, setGivenNameError] = useState(null);
     const [family_name_error, setFamilyNameError] = useState(null);
     const [date_of_birth_error, setDateOfBirthError] = useState(null);
-    const [country_of_tax_residency_error, setCountryOfTaxResidencyError] = useState(null);
+    const [tax_id_type_error, setTaxIdTypeError] = useState(null);
+    const [tax_id_error, setTaxIdError] = useState(null);
+    const [country_of_tax_residence_error, setCountryOfTaxResidenceError] = useState(null);
     const [funding_source_error, setFundingSourceError] = useState(null);
     //Disclousures
     const [is_control_person, setIsControlPerson] = useState(false);
@@ -54,22 +60,28 @@ const CreateAccount = () => {
     const [employer_name, setEmployerName] = useState('');
     const [employer_address, setEmployerAddress] = useState('');
     const [employment_position, setEmploymentPosition] = useState('');
+    const [employment_status_error, setEmploymentStatusError] = useState("");
     //Agreements 
-    const [agreements, setAgreements] = useState('');
-    const [signed_at, setSignedAt] = useState('');
+    const [agreements, setAgreements] = useState([]);
+    const [margin_agreement, setMarginAgreement] = useState('');
+    const [account_agreement, setAccountAgreement] = useState('');
+    const [customer_agreement, setCustomerAgreement] = useState('');
     const [ip_address, setIpAddress] = useState('');
     const [revision, setRevision] = useState('');
-    const [agreementsError, setAgreementsError] = useState(null);
+    const [margin_agreement_error, setMarginAgreementError] = useState(null);
+    const [account_agreement_error, setAccountAgreementError] = useState(null);
+    const [customer_agreement_error, setCustomerAgreementError] = useState(null);
     const [signed_at_error, setSignedAtError] = useState(null);
     const [ip_address_error, setIpAddressError] = useState(null);
     const [revisionError, setRevisionError] = useState(null);
     //Document
-    const [documents, setDocuments] = useState([]);
+    const [documents, setDocuments] = useState(null);
     const [content, setContent] = useState('');
     const [mime_type, setMimeType] = useState('');
     const [document_type, setDocumentType] = useState('');
     const [document_sub_type, setDocumentSubType] = useState('');
     const [document_type_error, setDocumentTypeError] = useState('');
+    const [mime_type_error, setMimeTypeError] = useState(null);
 
     //trusted contacts
     const [trusted_name, setTrustedName] = useState('');
@@ -95,6 +107,8 @@ const CreateAccount = () => {
         setState,
         postal_code,
         setPostalcode,
+        country,
+        setCountry,
         given_name,
         setGivenName,
         family_name,
@@ -109,8 +123,8 @@ const CreateAccount = () => {
         setCountryOfBirth,
         country_of_citizenship,
         setCountryOfCitizenship,
-        country_of_tax_residency,
-        setCountryOfTaxResidency,
+        country_of_tax_residence,
+        setCountryOfTaxResidence,
         visa_type,
         setVisaType,
         visa_expiration_date,
@@ -150,8 +164,12 @@ const CreateAccount = () => {
         employment_position,
         setEmploymentPosition,
         agreements, setAgreements,
-        signed_at,
-        setSignedAt,
+        margin_agreement,
+        setMarginAgreement,
+        account_agreement,
+        setAccountAgreement,
+        customer_agreement,
+        setCustomerAgreement,
         ip_address,
         setIpAddress,
         revision,
@@ -162,8 +180,14 @@ const CreateAccount = () => {
         setDocumentType,
         document_sub_type,
         setDocumentSubType,
+        mime_type,
+        setMimeType,
+        content,
+        setContent,
         document_type_error,
         setDocumentTypeError,
+        mime_type_error,
+        setMimeTypeError,
         trusted_name,
         setTrustedName,
         trusted_family_name,
@@ -178,39 +202,54 @@ const CreateAccount = () => {
         setCityError,
         stateError,
         setStateError,
+        countryError,
+        setCountryError,
         given_name_error,
         setGivenNameError,
         family_name_error,
         setFamilyNameError,
         date_of_birth_error,
         setDateOfBirthError,
-        country_of_tax_residency_error,
-        setCountryOfTaxResidencyError,
+        tax_id_type_error,
+        setTaxIdTypeError,
+        tax_id_error,
+        setTaxIdError,
+        country_of_tax_residence_error,
+        setCountryOfTaxResidenceError,
         funding_source_error,
         setFundingSourceError,
-        agreementsError,
-        setAgreementsError,
+        account_agreement_error,
+        setAccountAgreementError,
+        margin_agreement_error,
+        setMarginAgreementError,
+        customer_agreement_error,
+        setCustomerAgreementError,
+        employment_status_error,
+        setEmploymentStatusError,
         signed_at_error,
         setSignedAtError,
         ip_address_error,
         setIpAddressError,
         revisionError,
-        setRevisionError
+        setRevisionError,
+
     };
+    //console.log(values);
     // show Step
     const showStep = (step) => {
         switch (step) {
             case 1:
-                return <Contact
+                return <Identity
                     nextStep={nextStep}
                     values={values}
                 />
             case 2:
-                return <Identity
-                    prevStep={prevStep}
+                return <Contact
                     nextStep={nextStep}
+                    prevStep={prevStep}
                     values={values}
                 />
+
             case 3:
                 return <Disclosures
                     prevStep={prevStep}
@@ -237,6 +276,8 @@ const CreateAccount = () => {
 
         }
     }
+
+    // create account 
     return (
         <div className="account">
             <h1>Create account</h1>

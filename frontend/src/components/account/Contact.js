@@ -1,94 +1,114 @@
 import React from 'react'
 
-const Contact = ({ values, nextStep }) => {
-    //console.log(values)
-    // hanlde continue
-    const handleContinue = (e) => {
-        e.preventDefault();
-        if (values.email_address === '') {
-            values.setEmailError('Email address is required')
-        } else if (!/^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/i.test(values.email_address)) {
-            values.setEmailError("Not an valid email")
-        } else if (values.phone_number === '') {
-            values.setPhoneNumberError('Phone number is requrired');
-        } else if (!/^([0|\+[0-9]{1,5})?([7-9][0-9]{9})$/i.test(values.phone_number)) {
-            values.setPhoneNumberError('Not an valid phone number')
-        } else if (values.street_address === '') {
-            values.setStreetAddressError('Street address is required.')
-        } else if (values.city === '') {
-            values.setCityError('City is required');
-        } else {
-            nextStep()
-        }
+const Contact = ({ nextStep, prevStep, values }) => {
+    const { email_address, phone_number, street_address, city, state, postal_code, country } = values;
 
+    //go Back 
+    const goBack = () => {
+        prevStep()
+    }
+
+    //continue next 
+    const continueNext = (e) => {
+        e.preventDefault();
+        if (email_address === '') {
+            values.setEmailError("Email address is required.")
+        } else if (phone_number === '') {
+            values.setPhoneNumberError("Phone number is required.")
+        } else if (street_address === '') {
+            values.setStreetAddressError('Street address is required.')
+        } else if (city === '') {
+            values.setCityError("City is required");
+        } else if (state === '') {
+            values.setStateError('State is required.')
+        } else if (country === '') {
+            values.setCountryError("Country is required.")
+        } else {
+            nextStep();
+        }
     }
     return (
-        <div className="detail-section">
-            <h3>Contact</h3>
+        <div className='detail-section'>
+            <h3>Contact details</h3>
             <div className='form-group'>
-                <label className='label'>Email address</label>
-                <input type="email"
+                <label className='label'>Email</label>
+                <input
+                    type="email"
                     className='form-control'
-                    placeholder="Email address"
-                    defaultValue={values.email_address}
-                    onChange={(e) => values.setEmailAddress(e.target.value)}
+                    defaultValue={email_address}
+                    onChange={e => values.setEmailAddress(e.target.value)}
+                    placeholder='Email address'
                 />
             </div>
             {values.email_address_error && <span className='account-error-msg'>{values.email_address_error}</span>}
-            <div className="form-group">
+            <div className='form-group'>
                 <label className='label'>Phone number</label>
                 <input
                     type="text"
                     className='form-control'
-                    placeholder="Phone number include country code"
-                    defaultValue={values.phone_number}
-                    onChange={(e) => values.setPhoneNumber(e.target.value)}
+                    defaultValue={phone_number}
+                    onChange={e => values.setPhoneNumber(e.target.value)}
+                    placeholder='Phone number'
                 />
             </div>
             {values.phone_number_error && <span className='account-error-msg'>{values.phone_number_error}</span>}
-            <div className="form-group">
-                <label className='label'>Street Address</label>
+            <div className='form-group'>
+                <label className='label'>Street address</label>
                 <input
                     type="text"
                     className='form-control'
-                    placeholder="Street address"
-                    defaultValue={values.street_address}
-                    onChange={(e) => values.setStreetAddress(e.target.value)}
+                    defaultValue={street_address}
+                    onChange={e => values.setStreetAddress([e.target.value])}
+                    placeholder='Street address'
                 />
             </div>
             {values.street_address_error && <span className='account-error-msg'>{values.street_address_error}</span>}
-            <div className="form-group">
+            <div className='form-group'>
                 <label className='label'>City</label>
                 <input
                     type="text"
                     className='form-control'
-                    placeholder="City"
-                    defaultValue={values.city}
-                    onChange={(e) => values.setCity(e.target.value)}
+                    defaultValue={city}
+                    onChange={e => values.setCity(e.target.value)}
+                    placeholder='City'
                 />
             </div>
             {values.cityError && <span className='account-error-msg'>{values.cityError}</span>}
-            <div className="form-group">
+            <div className='form-group'>
                 <label className='label'>State</label>
                 <input
                     type="text"
                     className='form-control'
-                    placeholder="State"
-                    defaultValue={values.state}
-                    onChange={(e) => values.setState(e.target.value)}
+                    defaultValue={state}
+                    onChange={e => values.setState(e.target.value)}
+                    placeholder='State'
                 />
             </div>
-            <div className="form-group">
-                <label className='label'>Postalcode</label>
+            {values.stateError && <span className='account-error-msg'>{ }values.stateError</span>}
+            <div className='form-group'>
+                <label className='label'>Postal code</label>
                 <input
                     type="text"
                     className='form-control'
-                    placeholder="Postalcode"
-                    defaultValue={values.postal_code}
-                    onChange={(e) => values.setPostalcode(e.target.value)}
+                    defaultValue={postal_code}
+                    onChange={e => values.setPostalcode(e.target.value)}
+                    placeholder='Postal code'
                 />
             </div>
-            <button onClick={handleContinue} className='btn btn-sm'>Next</button>
+            <div className='form-group'>
+                <label className='label'>Country</label>
+                <input
+                    type="text"
+                    className='form-control'
+                    defaultValue={country}
+                    onChange={e => values.setCountry(e.target.value.toUpperCase())}
+                    placeholder='Country'
+                />
+            </div>
+            {values.countryError && <span className='account-error-msg'>{values.countryError}</span>}
+            <br />
+            <button className='btn' onClick={goBack}>Back</button>
+            <button className='btn' onClick={continueNext}>Next</button>
         </div>
     )
 }

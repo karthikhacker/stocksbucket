@@ -3,70 +3,64 @@ import { v4 as uuidv4 } from 'uuid';
 
 const Documents = ({ nextStep, prevStep, values }) => {
     const [error, setError] = useState(null);
-    const [preview, setPreview] = useState(null);
-    const [mime_type, setMimeType] = useState('');
-    const [content, setContent] = useState('');
-
-
-    // handle continue 
-    const handleContinue = (e) => {
-        e.preventDefault();
-        if (values.document_type === '') {
-            values.setDocumentTypeError('Doc type is required.')
-        } else if (mime_type === '') {
-            setError('document is required')
-        } else if (content === '') {
-            setError('Doc is required')
-        } else {
-            const { document_type, document_sub_type } = values;
-            const docData = {
-                id: uuidv4(),
-                mime_type,
-                content,
-                document_type,
-                document_sub_type,
-                createdAt: Date.now()
-            }
-            console.log(docData);
-            values.setDocuments([docData])
-            nextStep()
-        }
+    //go Back 
+    const goBack = () => {
+        prevStep()
     }
-    // handleBack
-    const handleBack = (e) => {
-        e.preventDefault()
-        prevStep();
+    //continueNext 
+    const continueNext = e => {
+        e.preventDefault();
+        const { document_type, document_sub_type, mime_type, content, setDocuments } = values;
+        if (document_type === '') {
+            values.setDocumentTypeError('Document type is required.');
+        } else if (mime_type === '') {
+            values.setMimeTypeError('File is required');
+        } else {
+            setDocuments([
+                {
+                    id: uuidv4(),
+                    document_type,
+                    document_sub_type,
+                    mime_type,
+                    content
+                }
+            ])
+            nextStep();
+            values.setDocumentTypeError(null);
+            values.setMimeTypeError(null);
+        }
     }
     //handle file 
     const handleFile = (e) => {
-        const selected = e.target.files[0];
-        // console.log(selected);
-        const allowedTypes = ['image/jpg', 'image/jpeg', 'image/png', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'application/pdf'];
-        if (selected && allowedTypes.includes(selected.type)) {
-            // console.log('selected');
-            let reader = new FileReader();
-            reader.onloadend = () => {
-                setPreview(selected);
-                setMimeType(selected.type);
-                setContent(reader.result);
-                setError(null)
-            }
-            reader.readAsDataURL(selected);
+        // console.log(e.target.files[0]);
+        const file = e.target.files[0];
+        console.log(file);
+        const validExt = ['jpeg', 'jpg', 'pdf'];
+        const ext = file.type.toLowerCase();
+        //console.log(ext);
+        if (ext !== 'image/jpg' && ext !== "image/jpeg" && ext !== "application/pdf") {
+            setError('File type not supported,only jpeg,jpg and pdf are supported.')
         } else {
-            setError('File not supported.')
-            setPreview(null)
+            // console.log(ext);
+            setError(null)
+            let reader = new FileReader();
+            reader.onload = () => {
+                values.setMimeType(file.type);
+                values.setContent(reader.result.slice(23));
+            }
+            reader.readAsDataURL(file)
         }
     }
-    //console.log(values.mime_type, values.content);
+    console.log(values.documents);
     return (
         <div className='detail-section'>
             <h3>Documents</h3>
             <div className='form-group'>
-                <label className='label'>Select document type</label>
-                <select className='form-control' onChange={e => values.setDocumentType(e.target.value)}>
-                    <option>Select a document type</option>
-                    <option value="identity_verification	">Identity verification</option>
-                    <option value="address_verification	">Address verification</option>
+                <label className='label'>Document type</label>
+                <select className='form-control' defaultValue={values.document_type} onChange={e => values.setDocumentType(e.target.value)} multiple={false}>
+                    <option value="">Select document type</option>
+                    <option value="identity_verification">Identity verification</option>
+                    <option value="address_verification">Address verification</option>
                     <option value="date_of_birth_verification">Date of birth verification</option>
                     <option value="tax_id_verification">Tax ID verification</option>
                     <option value="account_approval_letter">407 approval letter</option>
@@ -81,24 +75,23 @@ const Documents = ({ nextStep, prevStep, values }) => {
                     className='form-control'
                     defaultValue={values.document_sub_type}
                     onChange={e => values.setDocumentSubType(e.target.value)}
-                    placeholder="Document sub type"
+                    placeholder='Document sub type'
                 />
             </div>
             <div className='form-group'>
-                <button className='file-btn'>
-                    <i className="fas fa-cloud-upload-alt"></i>
-                    Choose a file to upload
-                </button>
+                <label className='label'>Upload document</label>
                 <input
                     type="file"
+                    className='form-control'
+                    placeholder='Upload file'
                     onChange={handleFile}
                 />
             </div>
-            <p>{preview ? preview.name : null}</p>
-            {error ? <span className='file-error'>{error}</span> : null}
+            {error && <span className='account-error-msg'>{error}</span>}
+            {values.mime_type_error && <span className='account-error-msg'>{values.mime_type_error}</span>}
             <br />
-            <button className='btn' onClick={handleBack}>Back</button>
-            <button className='btn' onClick={handleContinue}>Next</button>
+            <button className='btn' onClick={goBack}>Back</button>
+            <button className='btn' onClick={continueNext}>Next</button>
         </div>
     )
 }

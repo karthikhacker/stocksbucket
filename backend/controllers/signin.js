@@ -6,8 +6,8 @@ const config = require('../config/config');
 //user login 
 exports.signin = (req, res) => {
     User.findOne({ email: req.body.email }, (err, user) => {
-        if (err || !user) {
-            return res.status(400).json({ error: 'User not found, please signup up' })
+        if (err) {
+            return res.status(400).json({ error: err })
         }
         if (user) {
             if (req.body.password !== user.password) {

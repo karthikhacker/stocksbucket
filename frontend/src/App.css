@@ -760,7 +760,6 @@ p{
    font-size: 0.8em;
    font-weight: 400;
    border-radius: 0.2em;
-   text-transform: capitalize;
 }
 .account .form-group .form-control.error{
    border: 1px solid #e63946;
@@ -799,49 +798,20 @@ p{
    opacity: 0;
    position: absolute;
 }
-.account .detail-section .checkbox-section label::before{
-   content: '';
-   width:1.2em;
-   height:1.2em;
-   border:1px solid #000;
-   border-radius: .15em;
-   margin-right: 0.5em;
-}
-.account .detail-section .checkbox-section label:hover::before,
-.account .detail-section .checkbox-section input[type='checkbox']:hover + label::before{
-   background-color: #ced4da;
-}
-.account .detail-section .checkbox-section input[type='checkbox']:checked + label::before{
-   content:"\002714";
-   background-color: #e9ecef;
+.account .detail-section .disclosures-label{
    display: flex;
-   justify-content: center;
    align-items: center;
+   color:#ccc;
+}
+.account .detail-section .disclosures-label .form-control-checkbox{
+   margin-right: 1em;
+   width:20px;
+   height: 20px;
 }
 .account .detail-section .form-group{
    position: relative;
 }
-.account .detail-section input[type="file"]{
-   position: absolute;
-   opacity: 0;
-   top:18px;
-   left:0;
-}
-.account .detail-section .file-btn{
-   background-color: #FFF;
-   border:1px solid #dee2e6;
-   border-radius: 0.2em;
-   font-size: 0.8em;
-   font-weight: 400;
-   outline: none;
-   padding: 8px 10px ;
-   color:#adb5bd;
-   cursor: pointer;
-}
-.account .detail-section .file-btn i{
-   margin-right: 1em;
-   color:#adb5bd;
-}
+
 .account .detail-section .file-error{
    font-size: 0.8em;
    color:#d62828;
@@ -851,4 +821,35 @@ p{
    font-weight: 400;
    text-transform: capitalize;
    color:#e63946;
+}
+.account .account-error-alert{
+   width:100%;
+   padding:1em 0.6em;
+   margin: 0.8em 0 ;
+   background-color: #e63946;
+   color:#fff;
+   font-size: 0.8em;
+   text-transform: capitalize;
+   text-align: center;
+}
+.account .account-success-alert{
+   width:100%;
+   padding: 1em 0.6em;
+   margin: 0.8em 0;
+   background-color: #2a9d8f;
+   color:#FFF;
+   font-size: 0.9em;
+   text-align: center;
+}
+/**************************************Dashboard*******************************************/
+.dashboard{
+  font-size: 1em;
+}
+.dashboard .kyc-msg{
+   width:60%;
+   text-align: center;
+   margin : 1em auto;
+   border: 1px solid;
+   text-decoration: none;
+   
 }

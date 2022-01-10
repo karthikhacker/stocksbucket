@@ -1,60 +1,29 @@
 import React from 'react'
+import Loading from '../Loading'
+import { useDispatch, useSelector } from 'react-redux';
+import { createAccount } from '../../actions/accountAction';
+
 
 const TrustedContacts = ({ prevStep, values }) => {
-    // handleBack
-    const handleBack = (e) => {
-        e.preventDefault()
-        prevStep();
+    const dispatch = useDispatch();
+    const accountData = useSelector(state => state.acc);
+    const { account, accLoading, error } = accountData;
+    //go Back 
+    const goBack = () => {
+        prevStep()
     }
-    const { email_address,
-        phone_number,
-        street_address,
-        city,
-        state,
-        postal_code,
-        given_name,
-        family_name,
-        date_of_birth,
-        tax_id,
-        tax_id_type,
-        country_of_citizenship,
-        country_of_birth,
-        country_of_tax_residency,
-        visa_type,
-        visa_expiration_date,
-        date_of_departure_from_usa,
-        permanent_resident,
-        funding_source,
-        annual_income_min,
-        annual_income_max,
-        liquid_net_worth_min,
-        liquid_net_worth_max,
-        total_net_worth_min,
-        total_net_worth_max,
-        is_control_person,
-        is_affiliated_exchange_or_finra,
-        is_politically_exposed,
-        immediate_family_exposed,
-        employment_status,
-        employer_name,
-        employer_address,
-        employment_position,
-        agreements,
-        signed_at,
-        ip_address,
-        revision,
-        documents
-    } = values;
-    //handle account 
-    const handleAccount = (e) => {
+
+    // handleSubmit 
+    const handleSubmit = e => {
         e.preventDefault();
-        const userData = {
+        const {
             email_address,
             phone_number,
             street_address,
             city,
             state,
             postal_code,
+            country,
             given_name,
             family_name,
             date_of_birth,
@@ -62,12 +31,12 @@ const TrustedContacts = ({ prevStep, values }) => {
             tax_id_type,
             country_of_citizenship,
             country_of_birth,
-            country_of_tax_residency,
+            country_of_tax_residence,
+            funding_source,
             visa_type,
             visa_expiration_date,
             date_of_departure_from_usa,
             permanent_resident,
-            funding_source,
             annual_income_min,
             annual_income_max,
             liquid_net_worth_min,
@@ -78,29 +47,76 @@ const TrustedContacts = ({ prevStep, values }) => {
             is_affiliated_exchange_or_finra,
             is_politically_exposed,
             immediate_family_exposed,
-            employment_status,
-            employer_name,
-            employer_address,
-            employment_position,
             agreements,
-            signed_at,
-            ip_address,
-            revision,
             documents
+        } = values;
+        const contact = {
+            email_address,
+            phone_number,
+            street_address,
+            city,
+            state,
+            postal_code,
+            country
         }
-        console.log(userData);
+        const identity = {
+            given_name,
+            family_name,
+            date_of_birth,
+            tax_id,
+            tax_id_type,
+            country_of_citizenship,
+            country_of_birth,
+            country_of_tax_residence,
+            funding_source,
+            visa_type,
+            visa_expiration_date,
+            date_of_departure_from_usa,
+            permanent_resident,
+            annual_income_min,
+            annual_income_max,
+            liquid_net_worth_min,
+            liquid_net_worth_max,
+            total_net_worth_min,
+            total_net_worth_max
+        }
+        const disclosures = {
+            is_control_person,
+            is_affiliated_exchange_or_finra,
+            is_politically_exposed,
+            immediate_family_exposed
+        }
+        const trusted_contact = {
+            given_name,
+            family_name,
+            email_address
+        }
+
+        //console.log({ contact, identity, disclosures, agreements, documents, trusted_contact })
+        dispatch(createAccount(contact, identity, disclosures, agreements, documents, trusted_contact))
     }
+    console.log(accountData);
     return (
         <div className='detail-section'>
-            <h3>Trusted Contacts</h3>
+            <h3>Trusted contacts</h3>
+            {account.message && (
+                <div className='account-success-alert'>
+                    <p>{account.message}</p>
+                </div>
+            )}
+            {error && (
+                <div className='account-error-alert'>
+                    <p>{error.message}</p>
+                </div>
+            )}
             <div className='form-group'>
-                <label className='label'>Given name</label>
+                <label className='label'>Name</label>
                 <input
                     type="text"
                     className='form-control'
                     defaultValue={values.given_name}
                     onChange={e => values.setGivenName(e.target.value)}
-                    placeholder='Given name'
+                    placeholder='Family name'
                 />
             </div>
             <div className='form-group'>
@@ -113,8 +129,19 @@ const TrustedContacts = ({ prevStep, values }) => {
                     placeholder='Family name'
                 />
             </div>
-            <button className='btn' onClick={handleBack}>Back</button>
-            <button className='btn' onClick={handleAccount}>Submit</button>
+            <div className='form-group'>
+                <label className='label'>Email</label>
+                <input
+                    type="email"
+                    className='form-control'
+                    defaultValue={values.email_address}
+                    onChange={e => values.setEmailAddress(e.target.value)}
+                    placeholder='Email address'
+                />
+            </div>
+            <button className='btn' onClick={goBack}>Back</button>
+            {accLoading ? <Loading /> : <button className='btn' onClick={handleSubmit}>Submit</button>}
+
         </div>
     )
 }
